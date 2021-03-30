@@ -17,11 +17,11 @@ redis_host = getenv('REDIS_HOST', 'redis')
 redis_port = int(getenv('REDIS_PORT', 6379))
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://user:password@host:3306/db_name'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://user:password@host:5432/db_name'
-connection_string = getenv('DATABASE_URI', 'sqlite:////tmp/test.db')
-print('Conecting to DB', connection_string)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://mujuser:trololo@db:5432/test_db'
+#connection_string = getenv('DATABASE_URI', 'sqlite:////tmp/test.db')
+#print('Conecting to DB', connection_string)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
+#app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
 db = SQLAlchemy(app)
 
 

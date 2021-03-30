@@ -54,7 +54,7 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 - [ ] create `prusa_non_admin`, no sudo, no password, add ssh pubkey
 - [ ] install packages: `curl`, `wget`, `vim`, `nano`and`jq`
 - [x] dockerize the python app
-- [ ] prepare postgres db
+- [x] prepare postgres db
   - [ ] create full access application user
   - [ ] create read only dev user
 - [x] start the python app with two containers
