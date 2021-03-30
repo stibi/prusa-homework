@@ -1,3 +1,10 @@
+- name: Install required packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python3-passlib
+
 #   # TODO use app user and app directory
 - name: Copy compose source files
   ansible.builtin.copy:
@@ -9,13 +16,25 @@
     - docker-compose.yml
     - nginx.conf
 
+# TODO use app user and app directory
+# TODO generate random password
+# TODO encrypt and move the password to vault
+- name: Create htpasswd file with developer user
+  community.general.htpasswd:
+    path: /root/.htpasswd
+    name: developer
+    password: '9s36?;fyNp'
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Create and start services
   community.docker.docker_compose:
     project_name: homework
     project_src: /root/
     build: no
     pull: yes
-    recreate: always
+    recreate: smart
     restarted: yes
     scale:
       homeworkapp: 2
