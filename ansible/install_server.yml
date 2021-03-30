@@ -1,0 +1,5 @@
+---
+- hosts: app_server
+  remote_user: root
+  roles:
+    - docker

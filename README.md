@@ -1,5 +1,37 @@
 # Prusa ukol
 
+## Requirements
+
+- DigitalOcean account
+- Terraform
+- Ansible
+- [do-ansible-inventory](https://github.com/do-community/do-ansible-inventory) To generate inventory with DigitalOcean droplets to be used with Ansible
+
+## Docker image
+
+TODO Makefile
+
+## Deployment steps
+
+```
+$ ansible-playbook --private-key ~/.ssh/prusa_ukol -i inventory install_server.yml
+```
+
+### Terraform
+
+TODO
+
+### Ansible
+
+Generate ansible inventory from already existing DigitalOcean droplets:
+
+```
+cd ansible/
+do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
+```
+
+
+
 ## Tasks
 
 - [ ] run server on DigitalOcean
