@@ -27,3 +27,4 @@
 
 - multistaged docker image build (because of the need for gcc)
 - verze k python zavislostem
+- terraform tfstate remote backend
