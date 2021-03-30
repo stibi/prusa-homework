@@ -1,12 +1,12 @@
 # Prusa ukol
 
-## TODO
+## Tasks
 
 - [ ] run server on DigitalOcean
 - [ ] create `prusa_admin` user, passwordless sudo, no password, add ssh pubkey
 - [ ] create `prusa_non_admin`, no sudo, no password, add ssh pubkey
 - [ ] install packages: `curl`, `wget`, `vim`, `nano`and`jq`
-- [ ] dockerize the python app
+- [x] dockerize the python app
 - [ ] prepare postgres db
   - [ ] create full access application user
   - [ ] create read only dev user
@@ -21,4 +21,9 @@
 - [ ] prepare (re)deploy ansible playbook
   - build a new image
   - stops old containers, starts new ones
-  - without downtime 
+  - without downtime
+
+## TODO
+
+- multistaged docker image build (because of the need for gcc)
+- verze k python zavislostem
