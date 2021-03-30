@@ -14,7 +14,7 @@ resource "digitalocean_loadbalancer" "public" {
     entry_port     = 80
     entry_protocol = "http"
 
-    target_port     = 5000
+    target_port     = 4000
     target_protocol = "http"
   }
 
@@ -22,7 +22,7 @@ resource "digitalocean_loadbalancer" "public" {
     entry_port     = 443
     entry_protocol = "https"
 
-    target_port     = 5000
+    target_port     = 4000
     target_protocol = "http"
 
     certificate_name = digitalocean_certificate.le_cert.name

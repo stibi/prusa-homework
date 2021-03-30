@@ -3,23 +3,3 @@
   remote_user: root
   roles:
     - homework-app
-
-  # tasks:
-  #   # TODO use app user and app directory
-  #   - name: Copy compose source templates
-  #     ansible.builtin.copy:
-  #       src: docker-compose.yml
-  #       # dest: "{{ docker_compose_dir }}"
-  #       dest: /root/
-  #       mode: 0600
-
-  #   - name: Create and start services
-  #     community.docker.docker_compose:
-  #       project_name: homework
-  #       # TODO needs app directory
-  #       project_src: /root/
-  #       build: no
-  #     register: output
-
-  #   - ansible.builtin.debug:
-  #       var: output

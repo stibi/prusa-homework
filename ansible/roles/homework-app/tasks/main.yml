@@ -1,63 +1,21 @@
 #   # TODO use app user and app directory
-- name: Copy compose source templates
+- name: Copy compose source files
   ansible.builtin.copy:
-    src: docker-compose.yml
+    src: "{{ item }}"
     # dest: "{{ docker_compose_dir }}"
     dest: /root/
     mode: 0600
-
-# - name: Tear down existing services
-#   community.docker.docker_compose:
-#     project_src: flask
-#     state: absent
+  with_items:
+    - docker-compose.yml
+    - nginx.conf
 
 - name: Create and start services
   community.docker.docker_compose:
     project_name: homework
     project_src: /root/
+    scale:
+      homeworkapp: 2
   register: output
 
-- ansible.builtin.debug:
-    var: output
-
-# - name: Run `docker-compose up` again
-#   community.docker.docker_compose:
-#     project_src: flask
-#     build: no
-#   register: output
-
 # - ansible.builtin.debug:
 #     var: output
-
-# - ansible.builtin.assert:
-#     that: "not output.changed "
-
-# - name: Stop all services
-#   community.docker.docker_compose:
-#     project_src: flask
-#     build: no
-#     stopped: yes
-#   register: output
-
-# - ansible.builtin.debug:
-#     var: output
-
-# - ansible.builtin.assert:
-#     that:
-#       - "not web.flask_web_1.state.running"
-#       - "not db.flask_db_1.state.running"
-
-# - name: Restart services
-#   community.docker.docker_compose:
-#     project_src: flask
-#     build: no
-#     restarted: yes
-#   register: output
-
-# - ansible.builtin.debug:
-#     var: output
-
-# - ansible.builtin.assert:
-#     that:
-#       - "web.flask_web_1.state.running"
-#       - "db.flask_db_1.state.running"
