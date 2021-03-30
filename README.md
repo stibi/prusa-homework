@@ -63,7 +63,7 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 - [x] http -> https redirect
 - [x] setup TLS with LetsEncrypt
 - [ ] `/admin` with basic auth, `developer` user + random password
-- [ ] `/prepare-for-deploy` and `/ready-for-deploy` endpoint are blocked on load balancer
+- [x] `/prepare-for-deploy` and `/ready-for-deploy` endpoint are blocked on load balancer
 - [ ] prepare (re)deploy ansible playbook
   - build a new image
   - stops old containers, starts new ones
