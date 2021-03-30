@@ -1,4 +1,4 @@
 resource "digitalocean_domain" "app" {
-  name       = "devopsakuprusi.cz"
+  name       = var.domain
   ip_address = digitalocean_loadbalancer.public.ip
 }

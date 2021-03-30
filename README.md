@@ -1,4 +1,4 @@
-# Prusa ukol
+# Prusa homework
 
 ## Requirements
 
@@ -10,8 +10,6 @@
 - [community.docker.docker_compose](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html#ansible-collections-community-docker-docker-compose-module)
 
 ## Docker image
-
-TODO Makefile
 
 Build the image with `latest` tag:
 
@@ -62,8 +60,8 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 - [ ] start redis and connect with the app
 - [ ] automatic start & restart of the app unless stopped
 - [x] put load balancer in front of the app containers
-- [ ] http -> https redirect
-- [ ] setup TLS with LetsEncrypt
+- [x] http -> https redirect
+- [x] setup TLS with LetsEncrypt
 - [ ] `/admin` with basic auth, `developer` user + random password
 - [ ] `/prepare-for-deploy` and `/ready-for-deploy` endpoint are blocked on load balancer
 - [ ] prepare (re)deploy ansible playbook

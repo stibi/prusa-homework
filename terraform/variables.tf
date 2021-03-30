@@ -13,3 +13,7 @@ variable "app_server_image" {
 variable "app_server_size" {
   type = string
 }
+
+variable "domain" {
+  type = string
+}
