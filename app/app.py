@@ -1,4 +1,5 @@
 import time
+import socket
 from datetime import datetime, timedelta
 from os import getenv
 from random import uniform
@@ -102,6 +103,11 @@ def redis_hits():
                 return 'No response from redis'
             retries -= 1
             time.sleep(0.5)
+
+@app.route('/whoami')
+def whoami():
+    hostname = socket.gethostname()
+    return f"This is container {hostname}"
 
 if __name__ == '__main__':
     app.run(host=app_host, port=app_port)

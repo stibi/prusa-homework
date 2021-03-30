@@ -13,6 +13,10 @@
   community.docker.docker_compose:
     project_name: homework
     project_src: /root/
+    build: no
+    pull: yes
+    recreate: always
+    restarted: yes
     scale:
       homeworkapp: 2
   register: output
