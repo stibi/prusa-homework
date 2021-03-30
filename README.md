@@ -5,11 +5,27 @@
 - DigitalOcean account
 - Terraform
 - Ansible
+- Docker & docker-compose (both locally)
 - [do-ansible-inventory](https://github.com/do-community/do-ansible-inventory) To generate inventory with DigitalOcean droplets to be used with Ansible
+- [community.docker.docker_compose](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html#ansible-collections-community-docker-docker-compose-module)
 
 ## Docker image
 
 TODO Makefile
+
+Build the image with `latest` tag:
+
+```
+docker build -t stibi/prusa-homework .
+```
+
+Push to [Dockerhub](https://hub.docker.com/repository/docker/stibi/prusa-homework/):
+
+```
+docker push stibi/prusa-homework
+```
+
+Or you can use the `Makefile` and its `build` and `push` targets.
 
 ## Deployment steps
 
@@ -34,7 +50,7 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 
 ## Tasks
 
-- [ ] run server on DigitalOcean
+- [x] run server on DigitalOcean
 - [ ] create `prusa_admin` user, passwordless sudo, no password, add ssh pubkey
 - [ ] create `prusa_non_admin`, no sudo, no password, add ssh pubkey
 - [ ] install packages: `curl`, `wget`, `vim`, `nano`and`jq`
@@ -45,7 +61,7 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 - [ ] start the python app with two containers
 - [ ] start redis and connect with the app
 - [ ] automatic start & restart of the app unless stopped
-- [ ] put load balancer in front of the app containers
+- [x] put load balancer in front of the app containers
 - [ ] http -> https redirect
 - [ ] setup TLS with LetsEncrypt
 - [ ] `/admin` with basic auth, `developer` user + random password
