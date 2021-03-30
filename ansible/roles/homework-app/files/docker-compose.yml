@@ -5,6 +5,8 @@ services:
     image: stibi/prusa-homework:latest
     ports:
       - "5000"
+    depends_on:
+      - redis
   nginx:
     image: nginx:latest
     volumes:
@@ -14,3 +16,7 @@ services:
       - homeworkapp
     ports:
       - "4000:4000"
+  redis:
+    image: redis:6.2.1
+    ports:
+      - "6379:6379"

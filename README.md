@@ -58,7 +58,7 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
   - [ ] create full access application user
   - [ ] create read only dev user
 - [x] start the python app with two containers
-- [ ] start redis and connect with the app
+- [x] start redis and connect with the app
 - [ ] automatic start & restart of the app unless stopped
 - [x] put load balancer in front of the app containers
 - [x] http -> https redirect
