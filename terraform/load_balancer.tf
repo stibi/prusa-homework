@@ -1,3 +1,4 @@
+# rename, public je z doc
 resource "digitalocean_loadbalancer" "public" {
   name   = "prusa-homework"
   region = var.region
