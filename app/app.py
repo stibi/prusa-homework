@@ -15,15 +15,23 @@ app_host = getenv('APP_HOST', '0.0.0.0')
 app_port = int(getenv('APP_PORT', 5000))
 redis_host = getenv('REDIS_HOST', 'redis')
 redis_port = int(getenv('REDIS_PORT', 6379))
+
+db_host = getenv("DB_HOST", None)
+db_name = getenv("DB_NAME", None)
+db_user = getenv("DB_USER", None)
+db_password = getenv("DB_PASSWORD", None)
+
+connection_string = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:5432/{db_name}"
+print('Conecting to DB', connection_string)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://user:password@host:3306/db_name'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://mujuser:trololo@db:5432/test_db'
 #connection_string = getenv('DATABASE_URI', 'sqlite:////tmp/test.db')
 #print('Conecting to DB', connection_string)
-
 #app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
-db = SQLAlchemy(app)
 
+db = SQLAlchemy(app)
 
 class Palindrom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
