@@ -1,7 +1,7 @@
 ---
 # TODO FIXME [DEPRECATION WARNING]: Invoking "apt" only once while using a loop via squash_actions is deprecated. 
-- name: Install basic packages
-  apt: 
+- name: install basic packages
+  ansible.builtin.apt: 
     name: "{{ item }}"
     state: latest
     update_cache: yes 
@@ -12,3 +12,11 @@
     - vim
     - nano
     - jq
+
+- name: configure passwordless sudo
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'

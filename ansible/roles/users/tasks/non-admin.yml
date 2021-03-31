@@ -1,0 +1,12 @@
+---
+- name: add prusa_non_admin user
+  ansible.builtin.user:
+    name: prusa_non_admin
+    shell: /bin/bash
+
+- name: set ssh pubkey for prusa_non_admin user
+  authorized_key:
+    user: prusa_non_admin
+    state: present
+    key: "{{ lookup('file', 'files/pubkeys/non-admin.pub') }}"
+

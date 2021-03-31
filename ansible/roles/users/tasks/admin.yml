@@ -1,0 +1,13 @@
+---
+- name: add prusa_admin user
+  ansible.builtin.user:
+    name: prusa_admin
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+
+- name: set ssh pubkey for prusa_admin user
+  authorized_key:
+    user: prusa_admin
+    state: present
+    key: "{{ lookup('file', 'files/pubkeys/admin.pub') }}"
