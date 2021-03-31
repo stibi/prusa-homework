@@ -45,6 +45,7 @@ cd ansible/
 do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 ```
 
+or with the `Makefile` with `make inventory`
 
 
 ## Tasks
