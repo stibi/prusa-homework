@@ -9,6 +9,7 @@ resource "digitalocean_loadbalancer" "public" {
   name                   = var.project_name
   region                 = var.region
   redirect_http_to_https = true
+  droplet_tag            = "app-server"
 
   forwarding_rule {
     entry_port     = 80
@@ -29,10 +30,8 @@ resource "digitalocean_loadbalancer" "public" {
   }
 
   healthcheck {
-    port     = 22
-    protocol = "tcp"
+    protocol = "http"
+    port     = 4000
+    path     = "/status"
   }
-
-  # TODO taky bych mohl pouzit droplet_tag
-  droplet_ids = [digitalocean_droplet.app_server.id]
 }

@@ -21,3 +21,9 @@ variable "app_server_size" {
 variable "domain" {
   type = string
 }
+
+variable "app_servers_count" {
+  type        = number
+  default     = 1
+  description = "How many app servers to deploy"
+}
