@@ -1,0 +1,83 @@
+---
+- name: install packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - postgresql
+    - python3-psycopg2 # to make the community.postgresql.postgresql_db working
+
+- name: make sure postgresql is up and running
+  ansible.builtin.service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: create database
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_db:
+    name: "{{ db_name }}"
+
+- name: Check if app user exist already
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    query: SELECT 1 FROM pg_roles WHERE rolname='app';
+  register: app_user_exist
+
+- name: Create app user
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    query: CREATE USER app WITH ENCRYPTED PASSWORD %(app_db_user_password)s;
+    named_args:
+      app_db_user_password: "{{ app_db_user_password }}"
+  when: app_user_exist.rowcount == 0 
+
+- name: Grant permissions to app user
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    query: "GRANT ALL PRIVILEGES ON DATABASE {{ db_name }} TO app;"
+
+# - name: Check if dev user exist already
+#   become: yes
+#   become_user: postgres
+#   community.postgresql.postgresql_query:
+#     query: SELECT 1 FROM pg_roles WHERE rolname='dev';
+#   register: dev_user_exist
+
+# - name: Create dev user
+#   become: yes
+#   become_user: postgres
+#   community.postgresql.postgresql_query:
+#     query: create user dev with encrypted password 'bar';
+#   when: dev_user_exist.rowcount == 0 
+
+# - name: Grant permissions to dev user
+#   become: yes
+#   become_user: postgres
+#   community.postgresql.postgresql_query:
+#     query: "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO dev;"
+
+- name: Set postgres listen_address
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_set:
+    name: listen_addresses
+    value: "localhost,{{ db_server_listen_address }}"
+  notify:
+    - restart postgres
+
+- name: Grant app and dev access
+  community.postgresql.postgresql_pg_hba:
+    dest: /etc/postgresql/12/main/pg_hba.conf
+    contype: host
+    users: app,dev
+    source: 0.0.0.0/0
+    databases: "{{ db_name }}"
+    method: md5
+    create: true
+  notify:
+    - restart postgres
