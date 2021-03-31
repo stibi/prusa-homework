@@ -13,5 +13,6 @@ RUN apk add --no-cache libpq
 WORKDIR /app
 ADD app /app
 
+STOPSIGNAL SIGINT
 
 CMD ["python", "app.py"]
