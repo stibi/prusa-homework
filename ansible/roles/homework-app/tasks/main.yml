@@ -12,13 +12,11 @@
     state: started
     enabled: true
 
-# TODO generate random password
-# TODO encrypt and move the password to vault
 - name: create htpasswd file with developer user
   community.general.htpasswd:
     path: /etc/nginx/.htpasswd
     name: developer
-    password: '9s36?;fyNp'
+    password: "{{ admin_area_password }}"
     owner: root
     group: root
     mode: 0644
@@ -29,6 +27,12 @@
     dest: /etc/nginx/nginx.conf
     mode: 0644
   notify: reload nginx
+
+- name: homeworkapp envfile with configuration
+  ansible.builtin.template:
+    src: homeworkapp_envfile.j2
+    dest: /etc/default/homeworkapp
+    mode: '0644'
 
 - name: copy homework app systemd service
   ansible.builtin.copy:

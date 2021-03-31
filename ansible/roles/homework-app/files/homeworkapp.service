@@ -6,12 +6,18 @@ Requires=docker.service
 [Service]
 TimeoutStartSec=0
 Restart=always
-ExecStartPre=-/usr/bin/docker exec %n stop
-ExecStartPre=-/usr/bin/docker rm %n
+EnvironmentFile=-/etc/default/homeworkapp
+ExecStartPre=-/usr/bin/docker rm -f %n
 ExecStartPre=/usr/bin/docker pull stibi/prusa-homework:latest
 ExecStart=/usr/bin/docker run --rm --name %n \
+    -e DB_HOST=${DB_HOST} \
+    -e DB_NAME=${DB_NAME} \
+    -e DB_USER=${DB_USER} \
+    -e DB_PASSWORD=${DB_PASSWORD} \
     -p 5000:5000 \
     stibi/prusa-homework:latest
+ExecStop=-/usr/bin/docker stop %n
+ExecStopPost=-/usr/bin/docker rm %n
 
 [Install]
 WantedBy=default.target
