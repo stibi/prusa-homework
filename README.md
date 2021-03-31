@@ -9,6 +9,8 @@
 - [do-ansible-inventory](https://github.com/do-community/do-ansible-inventory) To generate inventory with DigitalOcean droplets to be used with Ansible
 - [community.docker.docker_compose](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html#ansible-collections-community-docker-docker-compose-module)
 - [community.general.htpasswd](https://docs.ansible.com/ansible/latest/collections/community/general/htpasswd_module.html)
+- [community.postgresql.postgresql_db](https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html)
+- [community.postgresql.postgresql_user](https://docs.ansible.com/ansible/latest//collections/community/postgresql/postgresql_user_module.html)
 
 ## Docker image
 
@@ -47,16 +49,21 @@ do-ansible-inventory --no-group-by-region --no-group-by-project --out inventory
 
 or with the `Makefile` with `make inventory`
 
+```
+❯ ansible-vault encrypt_string 'JofHEahIjSGFYRQoydV8yA==' --name 'app_db_user_password'
+```
+
+
 
 ## Tasks
 
 - [x] run server on DigitalOcean
-- [ ] create `prusa_admin` user, passwordless sudo, no password, add ssh pubkey
-- [ ] create `prusa_non_admin`, no sudo, no password, add ssh pubkey
+- [x] create `prusa_admin` user, passwordless sudo, no password, add ssh pubkey
+- [x] create `prusa_non_admin`, no sudo, no password, add ssh pubkey
 - [x] install packages: `curl`, `wget`, `vim`, `nano` and `jq`
 - [x] dockerize the python app
 - [x] prepare postgres db
-  - [ ] create full access application user
+  - [x] create full access application user
   - [ ] create read only dev user
 - [x] start the python app with two containers
 - [x] start redis and connect with the app
