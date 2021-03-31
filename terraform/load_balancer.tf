@@ -23,7 +23,7 @@ resource "digitalocean_loadbalancer" "public" {
     entry_port     = 443
     entry_protocol = "https"
 
-    target_port     = 4000
+    target_port     = 80
     target_protocol = "http"
 
     certificate_name = digitalocean_certificate.le_cert.name
@@ -31,7 +31,7 @@ resource "digitalocean_loadbalancer" "public" {
 
   healthcheck {
     protocol = "http"
-    port     = 4000
+    port     = 80
     path     = "/status"
   }
 }

@@ -1,0 +1,17 @@
+[Unit]
+Description=Prusa Homework App Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker exec %n stop
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull stibi/prusa-homework:latest
+ExecStart=/usr/bin/docker run --rm --name %n \
+    -p 5000:5000 \
+    stibi/prusa-homework:latest
+
+[Install]
+WantedBy=default.target

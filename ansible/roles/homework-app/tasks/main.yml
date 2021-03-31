@@ -1,44 +1,44 @@
-- name: Install required packages
-  package:
+- name: install required packages
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
     - python3-passlib
+    - nginx
 
-#   # TODO use app user and app directory
-- name: Copy compose source files
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    # dest: "{{ docker_compose_dir }}"
-    dest: /root/
-    mode: 0600
-  with_items:
-    - docker-compose.yml
-    - nginx.conf
+- name: make sure nginx is up and running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
 
-# TODO use app user and app directory
 # TODO generate random password
 # TODO encrypt and move the password to vault
-- name: Create htpasswd file with developer user
+- name: create htpasswd file with developer user
   community.general.htpasswd:
-    path: /root/.htpasswd
+    path: /etc/nginx/.htpasswd
     name: developer
     password: '9s36?;fyNp'
     owner: root
     group: root
     mode: 0644
 
-- name: Create and start services
-  community.docker.docker_compose:
-    project_name: homework
-    project_src: /root/
-    build: no
-    pull: yes
-    recreate: smart
-    restarted: yes
-    scale:
-      homeworkapp: 2
-  register: output
+- name: configure nginx
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: reload nginx
 
-# - ansible.builtin.debug:
-#     var: output
+- name: copy homework app systemd service
+  ansible.builtin.copy:
+    src: homeworkapp.service
+    dest: /etc/systemd/system/homeworkapp.service
+    mode: 0644
+  notify: reload systemd
+
+- name: make sure homework app is up and running
+  ansible.builtin.service:
+    name: homeworkapp
+    state: started
+    enabled: true
