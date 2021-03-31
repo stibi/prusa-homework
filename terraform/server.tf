@@ -8,5 +8,7 @@ resource "digitalocean_droplet" "app_server" {
   ssh_keys = [
     var.default_ssh_key_fingerprint
   ]
-  tags = ["app-server"]
+  # the first (with index 0) droplet is both app and db server, all others are only app servers
+  # poor man's inventory management
+  tags = count.index == 0 ? ["app-server", "db-server"] : ["app-server"]
 }

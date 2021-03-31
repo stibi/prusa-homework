@@ -5,3 +5,6 @@ prusa-homework-app-server-02	ansible_host=138.197.187.230
 prusa-homework-app-server-01
 prusa-homework-app-server-02
 
+[db_server]
+prusa-homework-app-server-01
+
