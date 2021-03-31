@@ -1,5 +1,30 @@
 ---
 - hosts: app_server
   remote_user: root
+  tags:
+    - app
+  vars:
+    homeworkapp_db_host: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
+    homeworkapp_db_name: homework
+    homeworkapp_db_user: app
+    homeworkapp_db_password: "{{ app_db_user_password }}"
+    admin_area_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38323134626439646265306137393839653630343534323563383539313933613830316330356263
+          3031363739653034333735663139613832393539393834630a316331623434636361383033643866
+          36623931613039393230376131653938646539333937333438653832313662646566616261393666
+          3666653337316162360a373531373230316464306133653032336335313537323232656661343366
+          35343231383832376461663966313362363062393532626135633035633436653732
   roles:
     - homework-app
+
+- hosts: db_server
+  remote_user: root
+  tags:
+    - db
+  vars:
+    db_server_listen_address: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
+    db_name: homework
+    table_name: palindrom
+  roles:
+    - postgres
