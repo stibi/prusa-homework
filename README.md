@@ -53,7 +53,7 @@ or with the `Makefile` with `make inventory`
 - [x] run server on DigitalOcean
 - [ ] create `prusa_admin` user, passwordless sudo, no password, add ssh pubkey
 - [ ] create `prusa_non_admin`, no sudo, no password, add ssh pubkey
-- [ ] install packages: `curl`, `wget`, `vim`, `nano`and`jq`
+- [x] install packages: `curl`, `wget`, `vim`, `nano` and `jq`
 - [x] dockerize the python app
 - [x] prepare postgres db
   - [ ] create full access application user

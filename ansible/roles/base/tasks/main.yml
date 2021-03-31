@@ -1,0 +1,14 @@
+---
+# TODO FIXME [DEPRECATION WARNING]: Invoking "apt" only once while using a loop via squash_actions is deprecated. 
+- name: Install basic packages
+  apt: 
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes 
+    force_apt_get: yes
+  with_items:
+    - curl
+    - wget
+    - vim
+    - nano
+    - jq
