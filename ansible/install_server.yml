@@ -4,3 +4,5 @@
   roles:
     - docker
     - docker-compose
+    - role: homework-app
+      tags: app
