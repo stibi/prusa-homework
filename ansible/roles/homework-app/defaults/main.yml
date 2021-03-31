@@ -1,3 +1,4 @@
 homeworkapp_db_host: localhost
 homeworkapp_db_name: homeworkapp
 homeworkapp_db_user: app
+redis_host: localhost

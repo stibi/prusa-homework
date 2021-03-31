@@ -15,6 +15,7 @@
           36623931613039393230376131653938646539333937333438653832313662646566616261393666
           3666653337316162360a373531373230316464306133653032336335313537323232656661343366
           35343231383832376461663966313362363062393532626135633035633436653732
+    redis_host: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
   roles:
     - homework-app
 
@@ -26,5 +27,9 @@
     db_server_listen_address: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
     db_name: homework
     table_name: palindrom
+    redis_bind: "127.0.0.1 {{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
   roles:
-    - postgres
+    - role: postgres
+      tags: postgres
+    - role: redis
+      tags: redis

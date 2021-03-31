@@ -26,9 +26,17 @@ resource "digitalocean_firewall" "app_servers" {
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
+  # postgres
   inbound_rule {
     protocol    = "tcp"
     port_range  = "5432"
+    source_tags = ["app-server"]
+  }
+
+  # redis
+  inbound_rule {
+    protocol    = "tcp"
+    port_range  = "6379"
     source_tags = ["app-server"]
   }
 

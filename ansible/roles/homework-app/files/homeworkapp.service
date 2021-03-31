@@ -14,6 +14,7 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -e DB_NAME=${DB_NAME} \
     -e DB_USER=${DB_USER} \
     -e DB_PASSWORD=${DB_PASSWORD} \
+    -e REDIS_HOST=${REDIS_HOST} \
     -p 5000:5000 \
     stibi/prusa-homework:latest
 ExecStop=-/usr/bin/docker stop %n

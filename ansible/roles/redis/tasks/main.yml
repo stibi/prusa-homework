@@ -1,0 +1,20 @@
+---
+- name: install packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - redis
+
+- name: make sure redis is up and running
+  ansible.builtin.service:
+    name: redis
+    state: started
+    enabled: true
+
+- name: configure where is redis listening
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^bind'
+    line: "bind {{ redis_bind }}"
+  notify: restart redis
