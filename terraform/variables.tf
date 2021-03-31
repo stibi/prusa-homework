@@ -27,3 +27,9 @@ variable "app_servers_count" {
   default     = 1
   description = "How many app servers to deploy"
 }
+
+variable "ssh_allowed_addresses" {
+  type        = list(any)
+  default     = []
+  description = "List of ip addresses allowed to ssh to servers"
+}

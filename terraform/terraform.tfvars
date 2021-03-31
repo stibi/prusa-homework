@@ -6,3 +6,4 @@ app_server_image            = "ubuntu-20-04-x64"
 app_server_size             = "s-1vcpu-2gb"
 domain                      = "devopsakuprusi.cz"
 app_servers_count           = 2
+ssh_allowed_addresses       = ["46.174.60.178/32"]
