@@ -2,6 +2,10 @@ variable "region" {
   type = string
 }
 
+variable "project_name" {
+  type = string
+}
+
 variable "default_ssh_key_fingerprint" {
   type = string
 }

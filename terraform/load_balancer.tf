@@ -6,7 +6,7 @@ resource "digitalocean_certificate" "le_cert" {
 
 # rename, public je z doc
 resource "digitalocean_loadbalancer" "public" {
-  name                   = "prusa-homework"
+  name                   = var.project_name
   region                 = var.region
   redirect_http_to_https = true
 
