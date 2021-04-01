@@ -17,3 +17,17 @@
     name: homeworkapp
     state: started
     enabled: true
+
+- name: initialize db in case it is not
+  run_once: true
+  block:
+    - name: check if app db is initialized
+      delegate_to: "{{ groups['db_server'][0] }}"
+      become: yes
+      become_user: postgres
+      community.postgresql.postgresql_query:
+        db: "{{ homeworkapp_db_name }}"
+        query: SELECT 1 from palindrom;
+  rescue:
+    - name: initialize app database
+      command: docker exec -ti homeworkapp.service sh -c 'python create_db.py'
