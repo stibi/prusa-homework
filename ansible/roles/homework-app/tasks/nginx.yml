@@ -1,0 +1,22 @@
+---
+- name: make sure nginx is up and running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: create htpasswd file with developer user
+  community.general.htpasswd:
+    path: /etc/nginx/.htpasswd
+    name: developer
+    password: "{{ admin_area_password }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: configure nginx
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: reload nginx

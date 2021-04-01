@@ -1,3 +1,4 @@
+---
 - name: install required packages
   ansible.builtin.package:
     name: "{{ item }}"
@@ -6,43 +7,6 @@
     - python3-passlib
     - nginx
 
-- name: make sure nginx is up and running
-  ansible.builtin.service:
-    name: nginx
-    state: started
-    enabled: true
-
-- name: create htpasswd file with developer user
-  community.general.htpasswd:
-    path: /etc/nginx/.htpasswd
-    name: developer
-    password: "{{ admin_area_password }}"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: configure nginx
-  ansible.builtin.copy:
-    src: nginx.conf
-    dest: /etc/nginx/nginx.conf
-    mode: 0644
-  notify: reload nginx
-
-- name: homeworkapp envfile with configuration
-  ansible.builtin.template:
-    src: homeworkapp_envfile.j2
-    dest: /etc/default/homeworkapp
-    mode: '0644'
-
-- name: copy homework app systemd service
-  ansible.builtin.copy:
-    src: homeworkapp.service
-    dest: /etc/systemd/system/homeworkapp.service
-    mode: 0644
-  notify: reload systemd
-
-- name: make sure homework app is up and running
-  ansible.builtin.service:
-    name: homeworkapp
-    state: started
-    enabled: true
+- include: nginx.yml
+- include: app.yml
+- include: db.yml

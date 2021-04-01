@@ -1,0 +1,19 @@
+---
+- name: homeworkapp envfile with configuration
+  ansible.builtin.template:
+    src: homeworkapp_envfile.j2
+    dest: /etc/default/homeworkapp
+    mode: '0644'
+
+- name: copy homework app systemd service
+  ansible.builtin.copy:
+    src: homeworkapp.service
+    dest: /etc/systemd/system/homeworkapp.service
+    mode: 0644
+  notify: reload systemd
+
+- name: make sure homework app is up and running
+  ansible.builtin.service:
+    name: homeworkapp
+    state: started
+    enabled: true
