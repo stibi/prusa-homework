@@ -1,2 +1,5 @@
 .terraform
 terraform.tfstate*
+ansible/ansible.cfg
+ansible/vault_password
+

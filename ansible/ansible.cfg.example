@@ -1,0 +1,6 @@
+[defaults]
+inventory = ./inventory/hosts
+private_key_file = CONFIGUREME
+remote_user = root
+vault_password_file = ./vault_password
+
