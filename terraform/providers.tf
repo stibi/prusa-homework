@@ -1,6 +1,4 @@
 provider "digitalocean" {
-  # TODO mozna radeji env var?
-  token = chomp(file("~/.config/digital-ocean/token"))
 }
 
 terraform {
