@@ -1,0 +1,43 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: build homeworkapp image
+      community.docker.docker_image:
+        name: stibi/prusa-homework:latest
+        build:
+          path: ../
+          args:
+            BUILD_VERSION_ARG: "Ansible build {{ '%Y-%m-%d %H:%M:%S' | strftime }}"
+        source: build
+        force_source: true
+        push: true
+        state: present
+      register: docker_build
+
+    - ansible.builtin.debug:
+        var: docker_build
+
+- hosts: app_server
+  remote_user: root
+  serial: 1
+  tasks:
+    - name: stop homework app
+      service:
+        name: homeworkapp
+        state: stopped
+
+    - name: start homework app
+      service:
+        name: homeworkapp
+        state: started
+
+    - name: wait until it's running
+      ansible.builtin.uri:
+        url: http://localhost/status 
+        return_content: yes
+        method: GET
+      register: result
+      until: result.status == 200 and result.content == 'OK'
+      retries: 30
+      delay: 1

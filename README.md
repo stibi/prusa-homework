@@ -73,7 +73,7 @@ or with the `Makefile` with `make inventory`
 - [x] setup TLS with LetsEncrypt
 - [x] `/admin` with basic auth, `developer` user + random password
 - [x] `/prepare-for-deploy` and `/ready-for-deploy` endpoint are blocked on load balancer
-- [ ] prepare (re)deploy ansible playbook
+- [x] prepare (re)deploy ansible playbook
   - build a new image
   - stops old containers, starts new ones
   - without downtime
