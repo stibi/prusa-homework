@@ -1,4 +1,19 @@
 ---
+- hosts: db_server
+  remote_user: root
+  tags:
+    - db
+  vars:
+    db_server_listen_address: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
+    db_name: homework
+    table_name: palindrom
+    redis_bind: "127.0.0.1 {{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
+  roles:
+    - role: postgres
+      tags: postgres
+    - role: redis
+      tags: redis
+
 - hosts: app_server
   remote_user: root
   tags:
@@ -18,18 +33,3 @@
     redis_host: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
   roles:
     - homework-app
-
-- hosts: db_server
-  remote_user: root
-  tags:
-    - db
-  vars:
-    db_server_listen_address: "{{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
-    db_name: homework
-    table_name: palindrom
-    redis_bind: "127.0.0.1 {{ hostvars[groups['db_server'][0]]['ansible_eth1']['ipv4']['address'] }}"
-  roles:
-    - role: postgres
-      tags: postgres
-    - role: redis
-      tags: redis
