@@ -10,6 +10,8 @@ RUN apk add --no-cache --virtual .build-deps gcc g++ musl-dev postgresql-dev \
 # to fix problem with: ImportError: Error loading shared library libpq.so.5: No such file or directory (needed by /usr/local/lib/python3.9/site-packages/psycopg2/_psycopg.cpython-39-x86_64-linux-gnu.so)
 RUN apk add --no-cache libpq
 
+ARG BUILD_VERSION_ARG=notspecified
+ENV BUILD_VERSION=$BUILD_VERSION_ARG
 WORKDIR /app
 ADD app /app
 

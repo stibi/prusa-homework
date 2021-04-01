@@ -112,10 +112,18 @@ def redis_hits():
             retries -= 1
             time.sleep(0.5)
 
+
 @app.route('/whoami')
 def whoami():
     hostname = socket.gethostname()
     return f"This is container {hostname}"
+
+
+@app.route('/version')
+def version():
+    build_version = getenv('BUILD_VERSION', 'unknown')
+    return build_version
+
 
 if __name__ == '__main__':
     app.run(host=app_host, port=app_port)
