@@ -1,0 +1,28 @@
+---
+- name: Check if app user exist already
+  delegate_to: "{{ groups['db_server'][0] }}"
+  run_once: true
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    query: SELECT 1 FROM pg_roles WHERE rolname='app';
+  register: app_user_exist
+
+- name: Create app user
+  delegate_to: "{{ groups['db_server'][0] }}"
+  run_once: true
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    query: CREATE USER app WITH ENCRYPTED PASSWORD %(app_db_user_password)s;
+    named_args:
+      app_db_user_password: "{{ homeworkapp_db_password }}"
+  when: app_user_exist.rowcount == 0
+
+- name: Grant permissions to app user
+  delegate_to: "{{ groups['db_server'][0] }}"
+  run_once: true
+  become: yes
+  become_user: postgres
+  community.postgresql.postgresql_query:
+    query: "GRANT ALL PRIVILEGES ON DATABASE {{ homeworkapp_db_name }} TO app;"

@@ -8,5 +8,6 @@
     - nginx
 
 - include: nginx.yml
+- include: app_db_user.yml
 - include: app.yml
-- include: db.yml
+- include: dev_db_user.yml
