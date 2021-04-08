@@ -4,6 +4,7 @@
   tasks:
     - name: build homeworkapp image
       community.docker.docker_image:
+        # Configure you own image if you want
         name: stibi/prusa-homework:latest
         build:
           path: ../

@@ -8,7 +8,7 @@ TimeoutStartSec=0
 Restart=always
 EnvironmentFile=-/etc/default/homeworkapp
 ExecStartPre=-/usr/bin/docker rm -f %n
-ExecStartPre=/usr/bin/docker pull stibi/prusa-homework:latest
+ExecStartPre=/usr/bin/docker pull {{ homeworkapp_docker_image }}
 ExecStart=/usr/bin/docker run --rm --name %n \
     -e DB_HOST=${DB_HOST} \
     -e DB_NAME=${DB_NAME} \
@@ -16,7 +16,7 @@ ExecStart=/usr/bin/docker run --rm --name %n \
     -e DB_PASSWORD=${DB_PASSWORD} \
     -e REDIS_HOST=${REDIS_HOST} \
     -p 5000:5000 \
-    stibi/prusa-homework:latest
+    {{ homeworkapp_docker_image }}
 ExecStop=-/usr/bin/docker stop %n
 ExecStopPost=-/usr/bin/docker rm %n
 

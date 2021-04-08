@@ -23,6 +23,8 @@
     homeworkapp_db_name: homework
     homeworkapp_db_user: app
     homeworkapp_db_password: "{{ app_db_user_password }}"
+    # configure your own dockerimage:tag in case you want
+    # homeworkapp_docker_image: CONFIGUREME
     admin_area_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           38323134626439646265306137393839653630343534323563383539313933613830316330356263

@@ -5,9 +5,9 @@
     dest: /etc/default/homeworkapp
     mode: '0644'
 
-- name: copy homework app systemd service
-  ansible.builtin.copy:
-    src: homeworkapp.service
+- name: homework app systemd service
+  ansible.builtin.template:
+    src: homeworkapp.service.j2
     dest: /etc/systemd/system/homeworkapp.service
     mode: 0644
   notify: reload systemd

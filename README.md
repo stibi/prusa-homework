@@ -133,6 +133,9 @@ The `postgres` and `redis` role is applied on the `db_server` host group and as 
 The `homework-app` expects that the docker image exist and can be pulled, but in case it is not so, then the next playbook can fix that and deploy
 the app to a running state.
 
+In case you have your own app docker image build, don't forget to modify the `homeworkapp_docker_image` variable in the playbook to override the
+default docker image name (`stibi/prusa-homework:latest`) defined in the `homework-app` role default variables.
+
 Run the playbook with:
 
 ```
@@ -160,6 +163,12 @@ build argument is set to current timestamp, which is then available as an enviro
 
 After the build, the playbook will deploy the image on each server, sequentially, one by one, always wiating for a new container to start responding before
 it moves on to next server.
+
+! In case you have your own docker app image and not the default `stibi/prusa-homework:latest`, don't forget to update the image name in the `build homeworkapp image` playbook step.
+
+```
+$ ansible-playbook 03_build_and_deploy.yml
+```
 
 Tip: Request `/version` to get currently deployed docker image:
 
@@ -216,7 +225,3 @@ Use `root` user with your DigitalOcean SSH key, or the `prusa_admin` or `prusa_n
   - build and push the image
   - then deploys to each app server, one by one, always waiting until the app is up and responding with `HTTP 200`
 - [x] Documentation
-
-## TODO
-
-- configurable image name, pro případ jiného docker hostingu
