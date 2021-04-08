@@ -219,5 +219,4 @@ Use `root` user with your DigitalOcean SSH key, or the `prusa_admin` or `prusa_n
 
 ## TODO
 
-- verze k python zavislostem
 - configurable image name, pro případ jiného docker hostingu
