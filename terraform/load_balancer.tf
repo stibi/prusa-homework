@@ -1,6 +1,8 @@
+resource "random_pet" "unique_cert_identifier" {
+}
+
 resource "digitalocean_certificate" "le_cert" {
-  # TODO needs to be unique name
-  name    = "le-${var.domain}-2"
+  name    = "le-${var.domain}-${random_pet.unique_cert_identifier.id}"
   type    = "lets_encrypt"
   domains = [var.domain]
 }
