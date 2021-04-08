@@ -1,5 +1,6 @@
 resource "digitalocean_certificate" "le_cert" {
-  name    = "le-${var.domain}"
+  # TODO needs to be unique name
+  name    = "le-${var.domain}-2"
   type    = "lets_encrypt"
   domains = [var.domain]
 }
@@ -30,8 +31,11 @@ resource "digitalocean_loadbalancer" "public" {
   }
 
   healthcheck {
-    protocol = "http"
-    port     = 80
-    path     = "/status"
+    protocol               = "http"
+    port                   = 80
+    path                   = "/status"
+    check_interval_seconds = 3
+    unhealthy_threshold    = 2
+    healthy_threshold      = 5
   }
 }
