@@ -22,6 +22,22 @@
   remote_user: root
   serial: 1
   tasks:
+    - name: prepare for deploy
+      ansible.builtin.uri:
+        url: http://localhost/prepare-for-deploy 
+        return_content: yes
+        method: GET
+
+    - name: wait for /ready-for-deploy
+      ansible.builtin.uri:
+        url: http://localhost/ready-for-deploy 
+        return_content: yes
+        method: GET
+      register: result
+      until: result.status == 200 and result.content == 'Ready'
+      retries: 60
+      delay: 3
+
     - name: stop homework app
       service:
         name: homeworkapp
