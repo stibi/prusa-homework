@@ -5,8 +5,7 @@ resource "digitalocean_certificate" "le_cert" {
   domains = [var.domain]
 }
 
-# rename, public je z doc
-resource "digitalocean_loadbalancer" "public" {
+resource "digitalocean_loadbalancer" "app" {
   name                   = var.project_name
   region                 = var.region
   redirect_http_to_https = true
